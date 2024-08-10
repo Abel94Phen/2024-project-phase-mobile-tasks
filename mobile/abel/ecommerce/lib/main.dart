@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'screens/home_screen.dart';
+import 'screens/home_screen.dart';
 
-import 'screens/details_screen.dart';
+// import 'screens/details_screen.dart';
 
 void main() {
   runApp(const Ecommerce());
@@ -19,7 +19,7 @@ class Ecommerce extends StatelessWidget {
         primaryColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const DetailsPage(),
+      home: const HomePage(),
     );
   }
 }

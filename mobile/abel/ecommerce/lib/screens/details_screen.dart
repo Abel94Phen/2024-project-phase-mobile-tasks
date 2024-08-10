@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-
+import '../models/products.dart';
 import '../widgets/rectangular_button_widget.dart';
 
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key});
+  final Product product;
+
+  const DetailsPage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        // Add SingleChildScrollView here
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Column(
@@ -20,7 +21,7 @@ class DetailsPage extends StatelessWidget {
                     height: 200,
                     width: double.infinity,
                     child: Image.asset(
-                      'shoes.jpg',
+                      product.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -42,24 +43,25 @@ class DetailsPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Men's Shoe",
-                      style: TextStyle(
+                      product.category, // Display product category dynamically
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),
                     ),
-                    Row(
+                    const Row(
                       children: <Widget>[
                         Icon(
                           Icons.star,
                           color: Colors.amber,
-                          size: 20,
+                          size: 2,
                         ),
                         SizedBox(width: 4),
                         Text(
@@ -71,18 +73,18 @@ class DetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(20.0),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Derby Leather',
-                      style: TextStyle(fontSize: 18),
+                      product.name, // Display product name dynamically
+                      style: const TextStyle(fontSize: 18),
                     ),
                     Text(
-                      '\$120',
-                      style: TextStyle(
+                      '\$${product.price}', // Display product price dynamically
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -106,12 +108,11 @@ class DetailsPage extends StatelessWidget {
                           foregroundColor: Colors.black,
                           backgroundColor: Colors.white,
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius
-                                .zero, // Makes the button rectangular
+                            borderRadius: BorderRadius.zero,
                           ),
                         ),
                         onPressed: () {
-                          print('Button $number pressed');
+                          debugPrint('Button $number pressed');
                         },
                         child: Text('$number'),
                       ),
@@ -119,11 +120,12 @@ class DetailsPage extends StatelessWidget {
                   }),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: Text(
-                  'A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.',
-                  style: TextStyle(fontSize: 12),
+                  product
+                      .description, // Display product description dynamically
+                  style: const TextStyle(fontSize: 12),
                 ),
               ),
               const SizedBox(height: 20), // Add some spacing before the buttons
