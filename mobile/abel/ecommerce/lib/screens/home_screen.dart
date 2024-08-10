@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:product6/screens/add_update_screen.dart';
+import 'package:product6/screens/search_screen.dart';
 import 'package:product6/widgets/date_greeting_widget.dart';
 import 'package:product6/widgets/product_card_widget.dart';
-
+import 'package:product6/models/products_list.dart';
+import 'package:product6/models/products.dart';
 import '../widgets/grey_box_widget.dart';
+import 'details_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -52,7 +56,12 @@ class HomePage extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(Icons.search, semanticLabel: 'search'),
                     onPressed: () {
-                      debugPrint("Search Pressed");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SearchPage(),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -61,14 +70,27 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 10.0),
             Expanded(
               child: ListView.builder(
-                itemCount: 20,
+                itemCount: productData.length,
                 itemBuilder: (context, index) {
-                  return const ProductCard(
-                    imageUrl: 'shoes.jpg',
-                    productName: 'Derby Leather Shoes',
-                    price: 120,
-                    rating: 4.0,
-                    category: "Men's Shoe",
+                  String key = productData.keys.elementAt(index);
+                  Product product = productData[key]!;
+
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(product: product),
+                        ),
+                      );
+                    },
+                    child: ProductCard(
+                      imageUrl: product.image,
+                      productName: product.name,
+                      price: product.price,
+                      rating: 4.0,
+                      category: product.category,
+                    ),
                   );
                 },
               ),
@@ -78,7 +100,12 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          debugPrint("FAB Pressed");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddUpdatepage(),
+            ),
+          );
         },
         foregroundColor: Colors.white,
         backgroundColor: const Color.fromARGB(255, 63, 81, 243),
