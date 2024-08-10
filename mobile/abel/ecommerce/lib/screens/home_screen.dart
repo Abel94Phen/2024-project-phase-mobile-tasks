@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:product6/screens/add_update_screen.dart';
-import 'package:product6/screens/search_screen.dart';
 import 'package:product6/widgets/date_greeting_widget.dart';
 import 'package:product6/widgets/product_card_widget.dart';
 import 'package:product6/models/products_list.dart';
 import 'package:product6/models/products.dart';
 import '../widgets/grey_box_widget.dart';
-import 'details_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -56,12 +53,7 @@ class HomePage extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(Icons.search, semanticLabel: 'search'),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SearchPage(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, '/searchpage');
                     },
                   ),
                 ),
@@ -77,11 +69,10 @@ class HomePage extends StatelessWidget {
 
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailsPage(product: product),
-                        ),
+                        '/detailspage',
+                        arguments: product,
                       );
                     },
                     child: ProductCard(
@@ -100,12 +91,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddUpdatepage(),
-            ),
-          );
+          Navigator.pushNamed(context, '/addupdatepage');
         },
         foregroundColor: Colors.white,
         backgroundColor: const Color.fromARGB(255, 63, 81, 243),

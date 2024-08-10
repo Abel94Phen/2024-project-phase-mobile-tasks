@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:product6/models/products_list.dart'; // Import your productData
 
+import '../models/products.dart';
 import '../widgets/product_card_widget.dart'; // Import the ProductCard widget
 
 class SearchPage extends StatelessWidget {
@@ -232,18 +233,26 @@ class SearchPage extends StatelessWidget {
 
   Widget _buildProductList() {
     return ListView.builder(
-      itemCount: productData.length,
-      itemBuilder: (context, index) {
-        final product = productData.values.elementAt(index);
-
-        return ProductCard(
-          imageUrl: product.image,
-          productName: product.name,
-          price: product.price,
-          rating: 4.0,
-          category: product.category,
-        );
-      },
-    );
+        itemCount: productData.length,
+        itemBuilder: (context, index) {
+          String key = productData.keys.elementAt(index);
+          Product product = productData[key]!;
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/detailspage',
+                arguments: product,
+              );
+            },
+            child: ProductCard(
+              imageUrl: product.image,
+              productName: product.name,
+              price: product.price,
+              rating: 4.0,
+              category: product.category,
+            ),
+          );
+        });
   }
 }
