@@ -5,7 +5,7 @@ class Product extends Equatable {
   final String name;
   final String description;
   final String imageUrl;
-  final String price;
+  final double price;
 
   const Product({
     required this.id,
