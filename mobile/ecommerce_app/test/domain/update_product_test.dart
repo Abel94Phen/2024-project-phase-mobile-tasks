@@ -1,42 +1,47 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/features/product/domain/entities/product.dart';
-import 'package:ecommerce_app/features/product/domain/repositories/product_repository.dart';
 import 'package:ecommerce_app/features/product/domain/usecases/update_product.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../helpers/test_helper.mocks.dart';
 
-
 void main() {
   late UpdateProduct updateProduct;
   late MockProductRepository mockProductRepository;
+
   setUp(() {
     mockProductRepository = MockProductRepository();
     updateProduct = UpdateProduct(mockProductRepository);
   });
-  const testProductdetail = Product(
-      id: '1',
-      name: 'Nike',
-      description: 'brand new nike aiforce',
-      price: 23.4,
-      imageUrl: 'imageUrl');
+
+  const testProductDetail = Product(
+    id: '1',
+    name: 'Nike',
+    description: 'brand new Nike Airforce',
+    price: 23.4,
+    imageUrl: 'imageUrl',
+  );
+
   const updatedTestProductDetail = Product(
-      id: '1',
-      name: 'puma',
-      description: 'brand new nike aiforce',
-      price: 30.8,
-      imageUrl: 'imageUrl');
+    id: '1',
+    name: 'Puma',
+    description: 'brand new Nike Airforce',
+    price: 30.8,
+    imageUrl: 'imageUrl',
+  );
 
-  test('should edit the product from the repository', () async {
-    //arrange
-
+  test('should edit the product in the repository', () async {
+    // Arrange
     when(mockProductRepository.updateProduct(any))
         .thenAnswer((_) async => const Right(updatedTestProductDetail));
-    //act
-    final result = await UpdateProduct(testProductdetail as ProductRepository);
-    //assert
+
+    // Act
+    final result = await updateProduct.execute(testProductDetail);
+
+    // Assert
     expect(result, const Right(updatedTestProductDetail));
-    verify(mockProductRepository.updateProduct(testProductdetail));
+    verify(mockProductRepository.updateProduct(testProductDetail));
+    verifyNoMoreInteractions(mockProductRepository);
   });
 }

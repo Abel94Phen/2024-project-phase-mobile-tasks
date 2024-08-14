@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/features/product/domain/entities/product.dart';
-import 'package:ecommerce_app/features/product/domain/repositories/product_repository.dart';
 import 'package:ecommerce_app/features/product/domain/usecases/create_product.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -27,7 +26,7 @@ void main() {
     when(mockProductRepository.createProduct(any))
         .thenAnswer((_) async => const Right(null));
     //act
-    final result = CreateProduct(testProductdetail as ProductRepository);
+    final result = createProduct.execute(testProductdetail);
     //assert
     expect(result, const Right(null));
     verify(mockProductRepository.createProduct(testProductdetail));
