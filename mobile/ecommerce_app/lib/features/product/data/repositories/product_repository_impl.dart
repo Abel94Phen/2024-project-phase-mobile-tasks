@@ -99,4 +99,6 @@ class ProductRepositoryImpl implements ProductRepository{
       return Left(ConnectionFailure());
     }
   }
+
+  getCurrentProduct(String testProductId) {}
 }
