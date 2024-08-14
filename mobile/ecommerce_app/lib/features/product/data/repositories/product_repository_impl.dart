@@ -1,8 +1,8 @@
+import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/failure.dart';
 import '../../../../core/platform/network_info.dart';
 import '../../domain/entities/product.dart';
-import 'package:dartz/dartz.dart';
-
 import '../../domain/repositories/product_repository.dart';
 
 class ProductRepositoryImpl implements ProductRepository{
