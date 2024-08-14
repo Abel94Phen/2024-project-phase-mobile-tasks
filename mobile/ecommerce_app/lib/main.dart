@@ -4,7 +4,7 @@ class Ecommerce extends StatelessWidget {
   const Ecommerce({super.key});
 
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
     
     return const MaterialApp(
       home: Scaffold(
@@ -13,6 +13,4 @@ class Ecommerce extends StatelessWidget {
     );
 
   }
-  
-  
 }
