@@ -24,6 +24,15 @@ class ProductModel extends Product{
     );
   }
   
+  // Returns a Product with the values of the productModel
+  Product toProduct() => Product(
+      id: id,
+      name: name,
+      description: description,
+      price: price,
+      imageUrl: imageUrl
+    );
+  
   // Returns a JSON representation of the Product
   Map<String, dynamic> toJson() {
     return {
@@ -39,9 +48,33 @@ class ProductModel extends Product{
   // STATIC METHODS
 
   // Converts a list of JSON represntations of a Product in to
-  // a list of ProductModels
+  // a list of ProductModel Objects
   static List<ProductModel> fromJsonList(List<dynamic> jsonList){
     return jsonList.map((json) => ProductModel.fromJson(json as Map<String, dynamic>)).toList();
+  }
+
+  // Converts a list of ProductModel Objects into
+  // a List of JSON Representations
+  static List<Map<String, dynamic>> toJsonList(List<ProductModel> products) {
+    return products.map((product) => product.toJson()).toList();
+  }
+
+  // Converts a list of ProductModels in to a
+  // List of Products
+  static List<Product> toEntityList(List<ProductModel> models) {
+    return models.map((model) => model.toProduct()).toList();
+  }
+
+  // Casts a Product to a ProductModel
+  // Helps to avoid casting errors
+    static ProductModel toModel(Product product) {
+    return ProductModel(
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    );
   }
 
 }

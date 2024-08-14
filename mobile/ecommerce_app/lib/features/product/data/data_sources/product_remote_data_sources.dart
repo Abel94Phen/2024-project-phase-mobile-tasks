@@ -7,10 +7,10 @@ import '../../../../core/error/exceptions.dart';
 import '../models/product_model.dart';
 
 abstract class ProductRemoteDataSource {
-  Future<ProductModel> getCurrentProduct(String productId);
-  Future<void> addProduct(ProductModel product);
+  Future<ProductModel> getSingleProduct(String productId);
+  Future<void> createProduct(ProductModel product);
   Future<void> deleteProduct(String productId);
-  Future<void> editProduct(ProductModel product);
+  Future<void> updateProduct(ProductModel product);
   Future<List<ProductModel>> getAllProducts();
 }
 
@@ -18,7 +18,7 @@ class ProdcutRemoteDataSourceImpl implements ProductRemoteDataSource {
   final http.Client client;
   ProdcutRemoteDataSourceImpl({required this.client});
   @override
-  Future<void> addProduct(ProductModel product) async {
+  Future<void> createProduct(ProductModel product) async {
     final uri = Uri.parse(Uris.baseUrl);
     final request = http.MultipartRequest('POST', uri);
     request.fields.addAll({
@@ -50,7 +50,7 @@ class ProdcutRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<void> editProduct(ProductModel product) async {
+  Future<void> updateProduct(ProductModel product) async {
     final productId = product.id;
     final jsonBody = {
       'name': product.name,
@@ -82,7 +82,7 @@ class ProdcutRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<ProductModel> getCurrentProduct(String productId) async {
+  Future<ProductModel> getSingleProduct(String productId) async {
     final uri = Uri.parse('${Uris.baseUrl}$productId');
     final response = await client.get(uri);
 

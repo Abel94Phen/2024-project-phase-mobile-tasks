@@ -9,7 +9,7 @@ class UpdateProduct {
 
   UpdateProduct(this._productrepository);
 
-  Future<Either<Failure, Product>> execute(Product product)  {
+  Future<Either<Failure, void>> execute(Product product)  {
     return _productrepository.updateProduct(product);
   }
 }
