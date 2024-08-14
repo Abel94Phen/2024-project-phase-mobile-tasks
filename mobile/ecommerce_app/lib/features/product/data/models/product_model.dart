@@ -11,7 +11,6 @@ class ProductModel extends Product{
     required super.imageUrl
     });
   
-  
   // Defines a named constructor to create a ProductModel object from a JSON map.
   // Utilizes a `factory` constructor to return an existing instance if available,
   // or creates and returns a new ProductModel instance if it doesn't already exist.
@@ -35,4 +34,14 @@ class ProductModel extends Product{
       'price': price,
     };
   }
+
+
+  // STATIC METHODS
+
+  // Converts a list of JSON represntations of a Product in to
+  // a list of ProductModels
+  static List<ProductModel> fromJsonList(List<dynamic> jsonList){
+    return jsonList.map((json) => ProductModel.fromJson(json as Map<String, dynamic>)).toList();
+  }
+
 }
