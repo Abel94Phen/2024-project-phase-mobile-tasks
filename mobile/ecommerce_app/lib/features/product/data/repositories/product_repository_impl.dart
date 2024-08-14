@@ -4,9 +4,12 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/platform/network_info.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/product_repository.dart';
+import '../data_sources/product_remote_data_sources.dart';
 
 class ProductRepositoryImpl implements ProductRepository{
 
+  final ProductRemoteDataSources productRemoteDataSources;
+  final ProductLocalDa
   late final NetworkInfo networkInfo;
 
   @override
