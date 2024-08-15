@@ -9,7 +9,7 @@ import 'dart:typed_data' as _i16;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:ecommerce_app/core/error/failure.dart' as _i8;
-import 'package:ecommerce_app/core/platform/network_info.dart' as _i12;
+import 'package:ecommerce_app/core/platform/network_info.dart' as _i13;
 import 'package:ecommerce_app/features/product/data/data_sources/product_local_data_sources.dart'
     as _i11;
 import 'package:ecommerce_app/features/product/data/data_sources/product_remote_data_sources.dart'
@@ -25,7 +25,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i15;
-import 'package:shared_preferences/shared_preferences.dart' as _i13;
+import 'package:shared_preferences/shared_preferences.dart' as _i12;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -147,40 +147,40 @@ class MockProductRepository extends _i1.Mock implements _i6.ProductRepository {
       ) as _i7.Future<_i2.Either<_i8.Failure, _i9.Product>>);
 
   @override
-  _i7.Future<_i2.Either<_i8.Failure, void>> createProduct(
+  _i7.Future<_i2.Either<_i8.Failure, _i9.Product>> createProduct(
           _i9.Product? product) =>
       (super.noSuchMethod(
         Invocation.method(
           #createProduct,
           [product],
         ),
-        returnValue: _i7.Future<_i2.Either<_i8.Failure, void>>.value(
-            _FakeEither_0<_i8.Failure, void>(
+        returnValue: _i7.Future<_i2.Either<_i8.Failure, _i9.Product>>.value(
+            _FakeEither_0<_i8.Failure, _i9.Product>(
           this,
           Invocation.method(
             #createProduct,
             [product],
           ),
         )),
-      ) as _i7.Future<_i2.Either<_i8.Failure, void>>);
+      ) as _i7.Future<_i2.Either<_i8.Failure, _i9.Product>>);
 
   @override
-  _i7.Future<_i2.Either<_i8.Failure, void>> updateProduct(
+  _i7.Future<_i2.Either<_i8.Failure, _i9.Product>> updateProduct(
           _i9.Product? product) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateProduct,
           [product],
         ),
-        returnValue: _i7.Future<_i2.Either<_i8.Failure, void>>.value(
-            _FakeEither_0<_i8.Failure, void>(
+        returnValue: _i7.Future<_i2.Either<_i8.Failure, _i9.Product>>.value(
+            _FakeEither_0<_i8.Failure, _i9.Product>(
           this,
           Invocation.method(
             #updateProduct,
             [product],
           ),
         )),
-      ) as _i7.Future<_i2.Either<_i8.Failure, void>>);
+      ) as _i7.Future<_i2.Either<_i8.Failure, _i9.Product>>);
 
   @override
   _i7.Future<_i2.Either<_i8.Failure, void>> deleteProduct(String? id) =>
@@ -226,15 +226,20 @@ class MockProductRemoteDataSource extends _i1.Mock
       ) as _i7.Future<_i3.ProductModel>);
 
   @override
-  _i7.Future<void> createProduct(_i3.ProductModel? product) =>
+  _i7.Future<_i3.ProductModel> createProduct(_i3.ProductModel? product) =>
       (super.noSuchMethod(
         Invocation.method(
           #createProduct,
           [product],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i7.Future<_i3.ProductModel>.value(_FakeProductModel_1(
+          this,
+          Invocation.method(
+            #createProduct,
+            [product],
+          ),
+        )),
+      ) as _i7.Future<_i3.ProductModel>);
 
   @override
   _i7.Future<void> deleteProduct(String? productId) => (super.noSuchMethod(
@@ -247,15 +252,20 @@ class MockProductRemoteDataSource extends _i1.Mock
       ) as _i7.Future<void>);
 
   @override
-  _i7.Future<void> updateProduct(_i3.ProductModel? product) =>
+  _i7.Future<_i3.ProductModel> updateProduct(_i3.ProductModel? product) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateProduct,
           [product],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i7.Future<_i3.ProductModel>.value(_FakeProductModel_1(
+          this,
+          Invocation.method(
+            #updateProduct,
+            [product],
+          ),
+        )),
+      ) as _i7.Future<_i3.ProductModel>);
 
   @override
   _i7.Future<List<_i3.ProductModel>> getAllProducts() => (super.noSuchMethod(
@@ -299,119 +309,10 @@ class MockProductLocalDataSource extends _i1.Mock
       ) as _i7.Future<void>);
 }
 
-/// A class which mocks [NetworkInfo].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i12.NetworkInfo {
-  MockNetworkInfo() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i7.Future<bool> get isConnected => (super.noSuchMethod(
-        Invocation.getter(#isConnected),
-        returnValue: _i7.Future<bool>.value(false),
-      ) as _i7.Future<bool>);
-}
-
-/// A class which mocks [InternetConnectionChecker].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockInternetConnectionChecker extends _i1.Mock
-    implements _i4.InternetConnectionChecker {
-  MockInternetConnectionChecker() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  Duration get checkInterval => (super.noSuchMethod(
-        Invocation.getter(#checkInterval),
-        returnValue: _FakeDuration_2(
-          this,
-          Invocation.getter(#checkInterval),
-        ),
-      ) as Duration);
-
-  @override
-  Duration get checkTimeout => (super.noSuchMethod(
-        Invocation.getter(#checkTimeout),
-        returnValue: _FakeDuration_2(
-          this,
-          Invocation.getter(#checkTimeout),
-        ),
-      ) as Duration);
-
-  @override
-  List<_i4.AddressCheckOptions> get addresses => (super.noSuchMethod(
-        Invocation.getter(#addresses),
-        returnValue: <_i4.AddressCheckOptions>[],
-      ) as List<_i4.AddressCheckOptions>);
-
-  @override
-  set addresses(List<_i4.AddressCheckOptions>? value) => super.noSuchMethod(
-        Invocation.setter(
-          #addresses,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i7.Future<bool> get hasConnection => (super.noSuchMethod(
-        Invocation.getter(#hasConnection),
-        returnValue: _i7.Future<bool>.value(false),
-      ) as _i7.Future<bool>);
-
-  @override
-  _i7.Future<_i4.InternetConnectionStatus> get connectionStatus =>
-      (super.noSuchMethod(
-        Invocation.getter(#connectionStatus),
-        returnValue: _i7.Future<_i4.InternetConnectionStatus>.value(
-            _i4.InternetConnectionStatus.connected),
-      ) as _i7.Future<_i4.InternetConnectionStatus>);
-
-  @override
-  _i7.Stream<_i4.InternetConnectionStatus> get onStatusChange =>
-      (super.noSuchMethod(
-        Invocation.getter(#onStatusChange),
-        returnValue: _i7.Stream<_i4.InternetConnectionStatus>.empty(),
-      ) as _i7.Stream<_i4.InternetConnectionStatus>);
-
-  @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  bool get isActivelyChecking => (super.noSuchMethod(
-        Invocation.getter(#isActivelyChecking),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  _i7.Future<_i4.AddressCheckResult> isHostReachable(
-          _i4.AddressCheckOptions? options) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #isHostReachable,
-          [options],
-        ),
-        returnValue:
-            _i7.Future<_i4.AddressCheckResult>.value(_FakeAddressCheckResult_3(
-          this,
-          Invocation.method(
-            #isHostReachable,
-            [options],
-          ),
-        )),
-      ) as _i7.Future<_i4.AddressCheckResult>);
-}
-
 /// A class which mocks [SharedPreferences].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSharedPreferences extends _i1.Mock implements _i13.SharedPreferences {
+class MockSharedPreferences extends _i1.Mock implements _i12.SharedPreferences {
   MockSharedPreferences() {
     _i1.throwOnMissingStub(this);
   }
@@ -587,6 +488,115 @@ class MockSharedPreferences extends _i1.Mock implements _i13.SharedPreferences {
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
+}
+
+/// A class which mocks [NetworkInfo].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNetworkInfo extends _i1.Mock implements _i13.NetworkInfo {
+  MockNetworkInfo() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i7.Future<bool> get isConnected => (super.noSuchMethod(
+        Invocation.getter(#isConnected),
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+}
+
+/// A class which mocks [InternetConnectionChecker].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockInternetConnectionChecker extends _i1.Mock
+    implements _i4.InternetConnectionChecker {
+  MockInternetConnectionChecker() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  Duration get checkInterval => (super.noSuchMethod(
+        Invocation.getter(#checkInterval),
+        returnValue: _FakeDuration_2(
+          this,
+          Invocation.getter(#checkInterval),
+        ),
+      ) as Duration);
+
+  @override
+  Duration get checkTimeout => (super.noSuchMethod(
+        Invocation.getter(#checkTimeout),
+        returnValue: _FakeDuration_2(
+          this,
+          Invocation.getter(#checkTimeout),
+        ),
+      ) as Duration);
+
+  @override
+  List<_i4.AddressCheckOptions> get addresses => (super.noSuchMethod(
+        Invocation.getter(#addresses),
+        returnValue: <_i4.AddressCheckOptions>[],
+      ) as List<_i4.AddressCheckOptions>);
+
+  @override
+  set addresses(List<_i4.AddressCheckOptions>? value) => super.noSuchMethod(
+        Invocation.setter(
+          #addresses,
+          value,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i7.Future<bool> get hasConnection => (super.noSuchMethod(
+        Invocation.getter(#hasConnection),
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+
+  @override
+  _i7.Future<_i4.InternetConnectionStatus> get connectionStatus =>
+      (super.noSuchMethod(
+        Invocation.getter(#connectionStatus),
+        returnValue: _i7.Future<_i4.InternetConnectionStatus>.value(
+            _i4.InternetConnectionStatus.connected),
+      ) as _i7.Future<_i4.InternetConnectionStatus>);
+
+  @override
+  _i7.Stream<_i4.InternetConnectionStatus> get onStatusChange =>
+      (super.noSuchMethod(
+        Invocation.getter(#onStatusChange),
+        returnValue: _i7.Stream<_i4.InternetConnectionStatus>.empty(),
+      ) as _i7.Stream<_i4.InternetConnectionStatus>);
+
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get isActivelyChecking => (super.noSuchMethod(
+        Invocation.getter(#isActivelyChecking),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i7.Future<_i4.AddressCheckResult> isHostReachable(
+          _i4.AddressCheckOptions? options) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #isHostReachable,
+          [options],
+        ),
+        returnValue:
+            _i7.Future<_i4.AddressCheckResult>.value(_FakeAddressCheckResult_3(
+          this,
+          Invocation.method(
+            #isHostReachable,
+            [options],
+          ),
+        )),
+      ) as _i7.Future<_i4.AddressCheckResult>);
 }
 
 /// A class which mocks [Client].

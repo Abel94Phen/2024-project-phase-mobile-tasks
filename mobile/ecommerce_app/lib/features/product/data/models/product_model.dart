@@ -1,3 +1,4 @@
+import '../../../../core/error/exceptions.dart';
 import '../../domain/entities/product.dart';
 
 class ProductModel extends Product{
@@ -15,13 +16,17 @@ class ProductModel extends Product{
   // Utilizes a `factory` constructor to return an existing instance if available,
   // or creates and returns a new ProductModel instance if it doesn't already exist.
   factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      price: (json['price'] as num).toDouble(),
-      imageUrl: json['imageUrl'],
-    );
+    try{
+      return ProductModel(
+        id: json['id'],
+        name: json['name'],
+        description: json['description'],
+        price: (json['price'] as num).toDouble(),
+        imageUrl: json['imageUrl'],
+      );
+    } catch(e) {
+      throw JsonParsingException();
+    }
   }
   
   // Returns a Product with the values of the productModel

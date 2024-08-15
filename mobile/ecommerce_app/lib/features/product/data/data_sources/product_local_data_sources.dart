@@ -11,9 +11,10 @@ abstract class ProductLocalDataSource {
   Future<void> cacheAllProducts(List<ProductModel> producToCache);
 }
 
-class ProductLocalDataSourceImpl implements ProductLocalDataSource {
+const cachedProducts = 'CACHED_PRODUCTS';
+
+class ProductLocalDataSourceImpl extends ProductLocalDataSource {
   final SharedPreferences sharedPreferences;
-  final CACHED_PRODUCTS = 'CACHED_PRODUCTS';
   ProductLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
@@ -21,7 +22,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
     try {
       final jsonProduct = json.encode(ProductModel.toJsonList(producToCache));
 
-      return sharedPreferences.setString(CACHED_PRODUCTS, jsonProduct);
+      return sharedPreferences.setString(cachedProducts, jsonProduct);
     } catch (e) {
       throw CacheException();
     }
@@ -30,7 +31,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   @override
   Future<List<ProductModel>> getAllProducts() {
     try {
-      final productsString = sharedPreferences.getString(CACHED_PRODUCTS);
+      final productsString = sharedPreferences.getString(cachedProducts);
       if (productsString != null) {
         final decodedJson = json.decode(productsString);
 

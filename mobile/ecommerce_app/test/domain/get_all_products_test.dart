@@ -10,11 +10,13 @@ import '../helpers/test_helper.mocks.dart';
 void main() {
   late GetAllProducts getAllProducts;
   late MockProductRepository mockProductRepository;
+
   setUp(() {
     mockProductRepository = MockProductRepository();
     getAllProducts = GetAllProducts(mockProductRepository);
   });
-  const testProductdetail = [
+
+  const testProductDetail = [
     Product(
         id: '1',
         name: 'Nike',
@@ -29,14 +31,17 @@ void main() {
         imageUrl: 'imageUrl')
   ];
 
-  test('should get all products from the repository', () async {
-    //arrange
-    when(mockProductRepository.getAllProducts())
-        .thenAnswer((_) async => const Right(testProductdetail));
-    //act
-    final result = getAllProducts;
-    //assert
-    expect(result, const Right(testProductdetail));
-    verify(mockProductRepository.getAllProducts());
+  test(
+    'should get all products from the repository',
+    () async {
+      //arrange
+      when(mockProductRepository.getAllProducts())
+        .thenAnswer((_) async => const Right(testProductDetail));
+    
+      //act
+      final result = await getAllProducts.execute();
+      
+      //assert
+      expect(result, const Right(testProductDetail));
   });
 }

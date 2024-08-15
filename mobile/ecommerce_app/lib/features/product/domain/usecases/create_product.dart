@@ -9,7 +9,7 @@ class CreateProduct {
 
   CreateProduct(this._productRepository);
 
-  Future<Either<Failure, void>> execute(Product product){
+  Future<Either<Failure, Product>> execute(Product product){
     return _productRepository.createProduct(product);
   }
 }

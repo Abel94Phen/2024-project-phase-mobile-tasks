@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecommerce_app/features/product/data/models/product_model.dart';
+import 'package:ecommerce_app/features/product/domain/entities/product.dart';
 import 'package:ecommerce_app/features/product/domain/usecases/get_single_product.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -15,7 +15,7 @@ void main() {
     getSingleProduct = GetSingleProduct(mockProductRepository);
   });
 
-  const testProductModel = ProductModel(
+  const testProductDetail = Product(
     id: '1',
     name: 'Product 1',
     description: 'This is Product 1',
@@ -31,13 +31,13 @@ void main() {
       //arrange
       when(
         mockProductRepository.getSingleProduct(productId)
-      ).thenAnswer((_) async => const Right(testProductModel));
+      ).thenAnswer((_) async => const Right(testProductDetail));
 
       //act
       final result = await getSingleProduct.execute(productId);
 
       //assert
-      expect(result, const Right(testProductModel));
+      expect(result, const Right(testProductDetail));
 
     }
   );

@@ -10,13 +10,15 @@ void main() {
   const testProductModel = ProductModel(
     id: '1',
     name: 'Product 1',
-    description: 'This is Product 1',
+    description: 'Product 1 description',
     imageUrl: 'product1.jpg',
     price: 100
   );
+  
   test(
     'Should be a subclass of product entity',
     () async {
+      // assert
       expect(testProductModel, isA<Product>());
     }
   );
@@ -24,12 +26,17 @@ void main() {
   test(
     'Should return a valid model from json',
     () async {
+
+      // arrange
       final Map<String, dynamic> jsonMap = json.decode(
-        readjson('helpers/dummy_data/dummy_product_data.json'
+        readjson('helpers/dummy_data/dummy_product_response.json'
         )
       )[0];
 
+      // act
       final result = ProductModel.fromJson(jsonMap);
+
+      // assert
       expect(result, equals(testProductModel));
     }
   );
@@ -37,20 +44,16 @@ void main() {
   test(
     'Should return a json map containing proper data',
     () async {
+
+      // arrange
+      final Map<String, dynamic> jsonMap = json
+        .decode(readjson('helpers/dummy_data/dummy_product_response.json'))[0];
+
+      // act
       final result = testProductModel.toJson();
 
-      final expextedJsonMap = [
-        {
-          'id' : '1',
-          'name' : 'Product 1',
-          'price' : 100.0,
-          'description' : 'This is Product 1',
-          'imageUrl' : 'product1.jpg'
-        },
-
-      ];
-
-      expect(result, expextedJsonMap[0]);
+      // assert
+      expect(result, jsonMap);
     }
   );
 }

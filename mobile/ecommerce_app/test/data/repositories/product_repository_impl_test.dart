@@ -4,24 +4,26 @@ import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/error/exceptions.dart';
 import 'package:ecommerce_app/core/error/failure.dart';
 import 'package:ecommerce_app/features/product/data/models/product_model.dart';
-import 'package:ecommerce_app/features/product/data/repositories/product_repository_impl.dart';
 import 'package:ecommerce_app/features/product/domain/entities/product.dart';
+import 'package:ecommerce_app/features/product/domain/repositories/product_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late ProductRepositoryImpl repository;
+ 
   late MockProductRemoteDataSource mockRemoteDataSource;
   late MockProductLocalDataSource mockLocalDataSource;
   late MockNetworkInfo mockNetworkInfo;
+  late ProductRepository productRepository;
 
   setUp(() {
     mockLocalDataSource = MockProductLocalDataSource();
     mockRemoteDataSource = MockProductRemoteDataSource();
     mockNetworkInfo = MockNetworkInfo();
-    repository = ProductRepositoryImpl(
+    
+    productRepository(
         productRemoteDataSource: mockRemoteDataSource,
         productLocalDataSource: mockLocalDataSource,
         networkInfo: mockNetworkInfo);

@@ -12,9 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
     ProductRepository,
     ProductRemoteDataSource,
     ProductLocalDataSource,
-    NetworkInfo,
-    InternetConnectionChecker,
     SharedPreferences,
+    NetworkInfo,
+    InternetConnectionChecker
   ],
   customMocks: [MockSpec<http.Client>(as: #MockHttpClient)],
 )

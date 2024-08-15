@@ -6,7 +6,6 @@ import 'package:mockito/mockito.dart';
 import '../helpers/test_helper.mocks.dart';
 
 
-
 void main() {
   late DeleteProduct deleteProduct;
   late MockProductRepository mockProductRepository;
@@ -16,15 +15,19 @@ void main() {
   });
 
   const testProductId = '1';
-  test('should delete the product from the repository', () async {
-    //arrange
-
-    when(mockProductRepository.deleteProduct(any))
+  test(
+    'should delete the product from the repository',
+    () async {
+  
+      //arrange
+      when(mockProductRepository.deleteProduct(testProductId))
         .thenAnswer((_) async => const Right(null));
-    //act
-    final result = deleteProduct.execute(testProductId);
-    //assert
-    expect(result, const Right(null));
-    verify(mockProductRepository.deleteProduct(testProductId));
+  
+      //act
+      final result = await deleteProduct.execute(testProductId);
+    
+      //assert
+      expect(result, const Right(null));
+    
   });
 }

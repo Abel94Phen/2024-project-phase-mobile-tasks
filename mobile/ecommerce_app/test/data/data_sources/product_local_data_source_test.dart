@@ -22,9 +22,9 @@ void main() {
   });
   group('getAllProducts', () {
     final jsonList = json.decode(
-        readjson('features/eCommerce/helpers/dummy_data/product_cached.json'));
+        readjson('test/helpers/dummy_data/product_cached_response.json'));
     final testProductModelList = ProductModel.fromJsonList(jsonList);
-    const CACHED_PRODUCTS = 'CACHED_PRODUCTS';
+    
     test(
         'should return cached products from shared reference when there is one in the cache',
         () async {
@@ -36,7 +36,7 @@ void main() {
       final result = await dataSource.getAllProducts();
 
       //assert
-      verify(mockSharedPreferences.getString(CACHED_PRODUCTS));
+      verify(mockSharedPreferences.getString(cachedProducts));
       expect(result, equals(testProductModelList));
     });
     test('should throw cache exception when there is not a cached value',
@@ -52,7 +52,7 @@ void main() {
     });
   });
   group('cacheAllProducts', () {
-    const CACHED_PRODUCTS = 'CACHED_PRODUCTS';
+    
     const testProductModelList = [
       ProductModel(
           id: '1',
@@ -74,7 +74,7 @@ void main() {
 
       //assert
 
-      verify(mockSharedPreferences.setString(CACHED_PRODUCTS, expectedJson));
+      verify(mockSharedPreferences.setString(cachedProducts, expectedJson));
     });
   });
 }

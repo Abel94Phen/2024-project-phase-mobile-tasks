@@ -1,5 +1,9 @@
-import 'package:dartz/dartz.dart';
+import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../../../core/constants/constant.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/platform/network_info.dart';
@@ -9,44 +13,53 @@ import '../data_sources/product_local_data_sources.dart';
 import '../data_sources/product_remote_data_sources.dart';
 import '../models/product_model.dart';
 
-class ProductRepositoryImpl implements ProductRepository{
-
-  final ProductRemoteDataSource productRemoteDataSource;
-  final ProductLocalDataSource productLocalDataSource;
+class ProductRepositoryImpl extends ProductRepository{
+  final ProductLocalDataSource localDataSource;
+  final ProductRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
 
   ProductRepositoryImpl({
-    required this.productRemoteDataSource,
-    required this.productLocalDataSource,
+    required this.remoteDataSource,
+    required this.localDataSource,
     required this.networkInfo
   });
 
   @override
-  Future<Either<Failure, void>> createProduct(Product product) async{
-    
-    if (await networkInfo.isConnected){
+  Future<Either<Failure, Product>> createProduct(Product product) async {
+    if (await networkInfo.isConnected) {
       try {
-        await productRemoteDataSource.createProduct(ProductModel.toModel(product));
-        return const Right(null);
+        final result = await remoteDataSource.createProduct(ProductModel.toModel(product));
+        return Right(result.toProduct());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure(ErrorMessages.serverError));
+      } on SocketException {
+        return const Left(ConnectionFailure(ErrorMessages.noInternet));
+      } catch(e){
+        final errorMessage = e.toString();
+        return Left(UnexpectedFailure(errorMessage));
       }
     } else {
-      return Left(ConnectionFailure());
+        return const Left(ConnectionFailure(ErrorMessages.noInternet));
     }
   }
 
   @override
-  Future<Either<Failure, void>> deleteProduct(String productId) async{
+  Future<Either<Failure, void>> deleteProduct(String productId) async {
     if (await networkInfo.isConnected) {
       try {
-        await productRemoteDataSource.deleteProduct(productId);
-        return const Right(null);
+        final result = await remoteDataSource.deleteProduct(productId);
+        return Right(result);
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure(ErrorMessages.serverError));
+      } on SocketException {
+        return const Left(
+            ConnectionFailure(ErrorMessages.noInternet));
+      } catch (e) {
+        final errorMessage = e.toString();
+        return Left(UnexpectedFailure(errorMessage));
       }
     } else {
-      return Left(ConnectionFailure());
+      return const Left(ConnectionFailure(ErrorMessages.noInternet));
     }
   }
 
@@ -54,19 +67,32 @@ class ProductRepositoryImpl implements ProductRepository{
   Future<Either<Failure, List<Product>>> getAllProducts() async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await productRemoteDataSource.getAllProducts();
-        await productLocalDataSource.cacheAllProducts(result);
-
+        final result = await remoteDataSource.getAllProducts();
+        try {
+          await localDataSource.cacheAllProducts(result);
+        } on CacheException {
+          debugPrint('Caching All Product Error');
+        }
         return Right(ProductModel.toEntityList(result));
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure(ErrorMessages.serverError));
+      } on SocketException {
+        return const Left(
+            ConnectionFailure(ErrorMessages.noInternet));
+      } catch (e) {
+        final errorMessage = e.toString();
+        return Left(UnexpectedFailure(errorMessage));
       }
     } else {
       try {
-        final result = await productLocalDataSource.getAllProducts();
+        
+        final result = await localDataSource.getAllProducts();
         return Right(ProductModel.toEntityList(result));
       } on CacheException {
-        return Left(CacheFailure());
+        return const Left(CacheFailure(ErrorMessages.cacheError));
+      } catch (e) {
+        final errorMessage = e.toString();
+        return Left(UnexpectedFailure(errorMessage));
       }
     }
   }
@@ -75,30 +101,40 @@ class ProductRepositoryImpl implements ProductRepository{
   Future<Either<Failure, Product>> getSingleProduct(String productId) async {
     if (await networkInfo.isConnected) {
       try {
-        return (Right(
-          await productRemoteDataSource.getSingleProduct(productId)
-        ));
+        final result = await remoteDataSource.getSingleProduct(productId);
+        return Right(result.toProduct());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure(ErrorMessages.serverError));
+      } on SocketException {
+        return const Left(
+            ConnectionFailure(ErrorMessages.noInternet));
+      } catch (e) {
+        final errorMessage = e.toString();
+        return Left(UnexpectedFailure(errorMessage));
       }
     } else {
-      return Left(ConnectionFailure());
+      return const Left(ConnectionFailure(ErrorMessages.noInternet));
     }
   }
 
   @override
-  Future<Either<Failure, void>> updateProduct(Product product) async {
+  Future<Either<Failure, Product>> updateProduct(Product product) async {
     if (await networkInfo.isConnected) {
       try {
-        await productRemoteDataSource.updateProduct(ProductModel.toModel(product));
-        return const Right(null);
+        final result =
+            await remoteDataSource.updateProduct(ProductModel.toModel(product));
+        return Right(result.toProduct());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure(ErrorMessages.serverError));
+      } on SocketException {
+        return const Left(
+            ConnectionFailure(ErrorMessages.noInternet));
+      } catch (e) {
+        final errorMessage = e.toString();
+        return Left(UnexpectedFailure(errorMessage));
       }
     } else {
-      return Left(ConnectionFailure());
+      return const Left(ConnectionFailure(ErrorMessages.noInternet));
     }
   }
-
-  getCurrentProduct(String testProductId) {}
 }
