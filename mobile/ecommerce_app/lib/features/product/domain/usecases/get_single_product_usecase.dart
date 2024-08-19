@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecase/usecase.dart';
-import '../enitities/product.dart';
+import '../entities/product.dart';
 import '../repositories/product_repository.dart';
 
 class GetSingleProductUsecase implements Usecase<Product, Params> {

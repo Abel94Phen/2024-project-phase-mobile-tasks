@@ -9,7 +9,7 @@ import 'dart:typed_data' as _i10;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:ecommerce_app/core/error/failure.dart' as _i6;
-import 'package:ecommerce_app/features/product/domain/enitities/product.dart'
+import 'package:ecommerce_app/features/product/domain/entities/product.dart'
     as _i7;
 import 'package:ecommerce_app/features/product/domain/repositories/product_repository.dart'
     as _i4;
