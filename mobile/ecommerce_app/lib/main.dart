@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const Ecommerce());
+}
+
 class Ecommerce extends StatelessWidget {
   const Ecommerce({super.key});
 
